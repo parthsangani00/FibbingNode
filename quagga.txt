@@ -1,0 +1,51 @@
+cd /opt/fibbing/etc
+sudo touch zebra.conf ospfd.conf
+sudo chmod 777 zebra.conf ospfd.conf
+
+sudo vim zebra.conf
+Paste this (modify to account for the adjacency of the network) : 
+
+! zebra.conf for Node 5
+hostname node5
+password zebra
+enable password zebra
+log file /var/log/quagga/zebra.log
+!
+interface eth2
+ ip address 10.10.2.1/24
+!
+
+sudo vim ospfd.conf
+Paste this (modify to account for the adjacency of the network) : 
+
+hostname node5
+password zebra
+log file /var/log/quagga/ospfd.log
+
+router ospf
+ router-id 5.5.5.5
+ log-adjacency-changes
+ network 10.10.2.0/24 area 0
+!
+interface eth2
+ ip ospf hello-interval 10
+ ip ospf dead-interval 40
+!
+
+cd /var/run
+sudo mkdir quagga
+cd quagga
+sudo touch zebra.pid ospfd.pid
+sudo chmod 777 zebra.pid ospfd.pid
+cd /var/log
+sudo mkdir quagga
+cd quagga
+sudo touch zebra.log ospfd.log
+sudo chmod 777 zebra.log ospfd.log
+
+sudo chown quagga:quagga /opt/fibbing/etc/zebra.conf /opt/fibbing/etc/ospfd.conf
+sudo chown quagga:quagga /var/run
+sudo /opt/fibbing/sbin/zebra -d -f /opt/fibbing/etc/zebra.conf -i /var/run/quagga/zebra.pid
+sudo /opt/fibbing/sbin/ospfd -d -f /opt/fibbing/etc/ospfd.conf -i /var/run/quagga/ospfd.pid
+
+sudo /opt/fibbing/bin/vtysh

@@ -1,0 +1,10 @@
+git clone --recursive https://github.com/Fibbing/FibbingNode.git
+
+sudo apt-get update
+sudo apt install gawk
+sudo apt install libreadline-dev
+sudo apt install texinfo
+sudo apt install python-pip
+pip install pytest-runner
+cd FibbingNode/
+sudo ./install.sh

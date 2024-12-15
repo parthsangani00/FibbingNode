@@ -1,3 +1,11 @@
+# Cloudlab setup
+
+Installation steps for cloudlab machines are in installation.txt
+
+# Running Quagga on cloudlab machines
+
+Setting up quagga and running it on cloudlab machines is described in quagga.txt
+
 # FibbingNode
 This repository contains the code to run a fibbing controller
 that is able to control unmodified OSPF router to setup arbitrary paths in the network.
